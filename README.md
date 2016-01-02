@@ -10,6 +10,11 @@ This branch is where I'm working on features for the next big release. That mean
 
 Please see the to-do list for a list of meaningful contribution that you can make, and also a list of things I am working on.
 
-## Contributing
+## TO-DO List
 
-Feel free to contribute! Pull request like normal.
+* Add USB-mode, with safe-USB attachments
+* remove commandHandler, and update that system to be more efficient.
+* Ping-phone feature (probably not going to happen this season though).
+
+## Contributing
+Feel free to contribute! Pull request like normal. If you added something from my to-do list then feel free to crosss it off here.
