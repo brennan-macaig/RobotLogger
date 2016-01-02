@@ -26,14 +26,14 @@ public class RobotLogger {
 		
 	}
 	
-	public static void commandHandle(String cmd, String msg, String level) {
-		LogToFile.commandListener(cmd, msg, level);
+	public static void log(String msg, String level) {
+		LogToFile.executeCommand(msg, level);
 	}
 	
 	public static void exitClean(String errorLevel, String message) {
 		// Safely exit the program
 		programWasQuit = true; // Alert all files that the program was quit (clean or no) so that code does not crash. 
-		System.out.println("This is a notice of CLEAN-EXIT. Code provided following exit reason: \n LVL: " + errorLevel + ", RSN: " + message);
+		System.err.println("This is a notice of CLEAN-EXIT. Code provided following exit reason: \n LVL: " + errorLevel + ", RSN: " + message);
 	}
 	
 	public static void main(String args[]) {

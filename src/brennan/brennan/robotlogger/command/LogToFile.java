@@ -14,6 +14,7 @@ import java.util.Date;
 
 import brennan.brennan.robotlogger.RobotLogger;
 import brennan.brennan.robotlogger.config.Config;
+import brennan.brennan.robotlogger.TryUSB;
 /**
  * RobotLogger (c) 2016 by Brennan Macaig
  *
@@ -26,20 +27,13 @@ import brennan.brennan.robotlogger.config.Config;
  */
 public class LogToFile {
 	
-	public static String id = "log";
 	/*
 	 * Filled this variable with junk, so that if filePath has been reset then it will exist, otherwise it won't (and won't throw errors!)
 	 */
 	public static String filePath = "asdlfhiy3kjadi";
 	
-	public static void commandListener(String input, String pass, String level) {
-		if (input.equalsIgnoreCase(id)) {
-			executeCommand(input, pass, level);
-		}
-	}
 	
-	@SuppressWarnings("deprecation")
-	public static void executeCommand(String cmd, String msg, String level) {
+	public static void executeCommand(String msg, String level) {
 		if (RobotLogger.programWasQuit == true) {
 			return;
 		}
@@ -51,14 +45,27 @@ public class LogToFile {
 			// File doesn't exist
 			createLogFile();
 			writeToLog(msg, level);
-			System.out.println("Does not exist got run");
 		} else {
-			RobotLogger.exitClean("LogToFile.executeCommand()[19]; File is a directory! Please clean filesystem.", "HIGH");
+			RobotLogger.exitClean("HIGH", "LogToFile.executeCommand()[19]; File is a directory! Please clean filesystem.");
 		}
 	}
 	private static String buildLogName() {
-		System.out.println("Building logfile name");
-		return "" + Config.filePath.toString() + Config.prefix.toString() + "-" + getCurrentTime().toString() + ".log";
+		if (Config.usbBOOL == true) {
+			// Attempt to find the USB.
+			if (TryUSB.tryUSB() == true) {
+				return "/U/" + Config.filePath.toString() + Config.prefix.toString() + "-" + getCurrentTime().toString() + ".log";
+			} else {
+				if(Config.exitBOOL == true) {
+					RobotLogger.exitClean("HIGH", "Could not load USB, and safe-exit is on! Quitting!");
+					return "";
+				} else {
+					// Resort to default path
+					return "" + Config.filePath.toString() + Config.prefix.toString() + "-" + getCurrentTime().toString() + ".log";
+				}
+			}
+		} else {
+			return "" + Config.filePath.toString() + Config.prefix.toString() + "-" + getCurrentTime().toString() + ".log";
+		}
 	}
 	
 	private static void createLogFile() {
@@ -67,7 +74,10 @@ public class LogToFile {
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter(filePath, "UTF-8");
-			writer.println("# Log file created by LogRobo");
+			writer.println("###########################");
+			writer.println("#   RobotLogger Log File  #");
+			writer.println("###########################");
+			writer.println("\n###LOG Generated on: " + getCurrentTime());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,9 +95,9 @@ public class LogToFile {
 	}
 	
 	private static void writeToLog(String write, String level) {
-		System.out.println("Writing to log file");
 		try {
-		    Files.write(Paths.get(filePath), buildMessage(write, level).getBytes(), StandardOpenOption.APPEND);
+			// BUGFIX: Changed path so that it's actually correct.
+		    Files.write(Paths.get(buildLogName()), buildMessage(write, level).getBytes(), StandardOpenOption.APPEND);
 		}catch (IOException e) {
 		    //exception handling left as an exercise for the reader
 			e.printStackTrace();

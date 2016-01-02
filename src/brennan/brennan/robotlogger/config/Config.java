@@ -27,7 +27,6 @@ public class Config {
 	public static String exitOp = "";
 	public static boolean exitBOOL = true;
 	
-	@SuppressWarnings("deprecation")
 	public static void getConfig() {
 		// Test if the file exists
 		File f = new File("robotlogger.config");
