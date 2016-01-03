@@ -13,8 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import brennan.brennan.robotlogger.RobotLogger;
-import brennan.brennan.robotlogger.config.Config;
 import brennan.brennan.robotlogger.TryUSB;
+import brennan.brennan.robotlogger.config.Config;
 /**
  * RobotLogger (c) 2016 by Brennan Macaig
  *
@@ -35,18 +35,20 @@ public class LogToFile {
 	
 	public static void executeCommand(String msg, String level) {
 		if (RobotLogger.programWasQuit == true) {
+			System.out.println("RobotLogger was safely quit. Ignoring request...");
 			return;
-		}
-		File f = new File(filePath);
-		if (f.exists() && (!f.isDirectory())) {
-			// File exists
-			writeToLog(msg, level);
-		} else if (!(f.exists() && (!f.isDirectory()))) {
-			// File doesn't exist
-			createLogFile();
-			writeToLog(msg, level);
 		} else {
-			RobotLogger.exitClean("HIGH", "LogToFile.executeCommand()[19]; File is a directory! Please clean filesystem.");
+			File f = new File(filePath);
+			if (f.exists() && (!f.isDirectory())) {
+				// File exists
+				writeToLog(msg, level);
+			} else if (!(f.exists() && (!f.isDirectory()))) {
+				// File doesn't exist
+				createLogFile();
+				writeToLog(msg, level);
+			} else {
+				RobotLogger.exitClean("HIGH", "LogToFile.executeCommand()[19]; File is a directory! Please clean filesystem.");
+			}
 		}
 	}
 	private static String buildLogName() {
@@ -69,20 +71,20 @@ public class LogToFile {
 	}
 	
 	private static void createLogFile() {
-		System.out.println("Creating log file");
 		filePath = buildLogName();
 		PrintWriter writer;
 		try {
+			File file = new File(filePath);
+			file.getParentFile().mkdirs();
 			writer = new PrintWriter(filePath, "UTF-8");
-			writer.println("###########################");
-			writer.println("#   RobotLogger Log File  #");
-			writer.println("###########################");
-			writer.println("\n###LOG Generated on: " + getCurrentTime());
+			writer.print("\n");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			RobotLogger.exitClean("HIGH", "FileNotFound exception, line 81");
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
+			RobotLogger.exitClean("HIGH", "UnsupportedEncodingException, line 84");
 			e.printStackTrace();
 		}
 		
@@ -100,12 +102,13 @@ public class LogToFile {
 		    Files.write(Paths.get(buildLogName()), buildMessage(write, level).getBytes(), StandardOpenOption.APPEND);
 		}catch (IOException e) {
 		    //exception handling left as an exercise for the reader
+			RobotLogger.exitClean("HIGH", "IOException, line 101");
 			e.printStackTrace();
 		}
 	}
 	
 	private static String getCurrentTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd+HH-mm-ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 		Date date = new Date();
 		return dateFormat.format(date).toString();
 	}

@@ -35,8 +35,4 @@ public class RobotLogger {
 		programWasQuit = true; // Alert all files that the program was quit (clean or no) so that code does not crash. 
 		System.err.println("This is a notice of CLEAN-EXIT. Code provided following exit reason: \n LVL: " + errorLevel + ", RSN: " + message);
 	}
-	
-	public static void main(String args[]) {
-		init();
-	}
 }

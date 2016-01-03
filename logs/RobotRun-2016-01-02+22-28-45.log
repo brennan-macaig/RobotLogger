@@ -1,0 +1,3 @@
+[2016-01-02+22-28-45] [INFO] Hello, logger! This is me!
+[2016-01-02+22-28-45] [WARN] Whoah there buddy! This be a warning!
+[2016-01-02+22-28-45] [ERROR] And here be an error!

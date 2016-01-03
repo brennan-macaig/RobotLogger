@@ -32,13 +32,11 @@ public class Config {
 		File f = new File("robotlogger.config");
 		if (!(f.exists() && !f.isDirectory())) {
 			// File does NOT exist, create it!
-			System.out.println("Config doesn't exist. Creating one for you...");
 			createConfig();
 			loadConfig();
 			parseVariables();
 		} else if (f.exists() && !f.isDirectory()) {
 			// File does exist, just load it.
-			System.out.println("Config exists! Reading config...");
 			loadConfig();
 			parseVariables();
 		} else {
@@ -49,7 +47,6 @@ public class Config {
 	
 	public static void loadConfig() {
 		// Grab the variables from the config and save them somewhere safe.
-		System.out.println("Config was found! Loading it...");
 		Properties prop = new Properties();
 		InputStream input = null;
 		
@@ -62,7 +59,6 @@ public class Config {
 			filePath = prop.getProperty("filepath");
 			prefix = prop.getProperty("file-prefix");
 			exitOp = prop.getProperty("exit-without-usb");
-			System.out.println("Config values: " + usb + "\n" + filePath + "\n" + prefix + "\n" + exitOp + "\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -78,7 +74,6 @@ public class Config {
 	
 	public static void createConfig() {
 		// No config file was detected, lets create one.
-		System.out.println("Creating config file with DEFAULT settings");
 		Properties prop = new Properties();
 		OutputStream output = null;
 
@@ -111,7 +106,6 @@ public class Config {
 	
 	public static void parseVariables() {
 		// Take the strings and turn any of them into non-strings that shouldn't be strings (I.E. true or false to boolean)
-		System.out.println("Converting strings to assorted variables");
 		if (usb.equalsIgnoreCase("false")) {
 			usbBOOL = false;
 		} else if (usb.equalsIgnoreCase("true")) {
