@@ -12,9 +12,13 @@ Please see the to-do list for a list of meaningful contribution that you can mak
 
 ## TO-DO List
 
-* Add USB-mode, with safe-USB attachments
-* remove commandHandler, and update that system to be more efficient.
+* ~~Add USB-mode, with safe-USB attachments~~ DONE! Completed by Brennan Macaig, 1/2/16
+* ~~remove commandHandler, and update that system to be more efficient.~~ DONE! Completed by Brennan Macaig, 1/2/16
 * Ping-phone feature (probably not going to happen this season though).
+
+### Things that have changed
+
+Logging system is different now. Just call `RobotLogger.log(String message, String level);` rather than worrying about the janky commandHandler system.
 
 ## Contributing
 Feel free to contribute! Pull request like normal. If you added something from my to-do list then feel free to crosss it off here.
