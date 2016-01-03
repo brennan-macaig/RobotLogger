@@ -14,13 +14,9 @@ import brennan.brennan.robotlogger.config.Config;
  *
  */
 public class RobotLogger {
+	
 	public static boolean programWasQuit = false;
-	/**
-	 * Bootstrap the program.
-	 * 1. Gets the properties file, and reads it
-	 * 2. Passes input of this file to other functions.
-	 * 3. Cleanly runs, and exists when no longer needed.
-	 */
+	
 	public static void init() {
 		Config.getConfig(); // Get the config file
 		
