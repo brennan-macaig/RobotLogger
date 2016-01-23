@@ -100,6 +100,7 @@ public class LogToFile {
 		try {
 			// BUGFIX: Changed path so that it's actually correct.
 		    Files.write(Paths.get(buildLogName()), buildMessage(write, level).getBytes(), StandardOpenOption.APPEND);
+		    System.out.println(buildMessage(write, level));
 		}catch (IOException e) {
 		    //exception handling left as an exercise for the reader
 			RobotLogger.exitClean("HIGH", "IOException, line 101");

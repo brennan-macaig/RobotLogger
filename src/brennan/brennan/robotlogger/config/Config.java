@@ -29,7 +29,7 @@ public class Config {
 	
 	public static void getConfig() {
 		// Test if the file exists
-		File f = new File("robotlogger.config");
+		File f = new File("/U/robotlogger.config");
 		if (!(f.exists() && !f.isDirectory())) {
 			// File does NOT exist, create it!
 			createConfig();
