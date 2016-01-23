@@ -4,7 +4,7 @@ A Java implementation of a light-weight logging system for FRC Robots. C++ Libra
 =======
 RobotLogger was created because my team needed error logging for our code. Implementing an enterprise solution like `log4j` was just impractical at the level of "I just need this to work" that our team required. Meet RobotLogger, my (maybe-not-so)elegant solution to a simple problem.
 
-For our development branch (that may be unstable) please see the [dev1.0 branch](https://github.com/brennan-macaig/RobotLogger/tree/dev1.0). Lots of things are bound to change between this (currently ALPHA) release and the final 1.0 release.
+***Current Version: 1.0-Final-Stable***
 
 ## Features
 RobotLogger has a few things by default that make it better than other solutions, such as...
