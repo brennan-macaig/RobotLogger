@@ -20,12 +20,15 @@ public class TryUSB {
 	 */
 	
 	public static boolean tryUSB() {
-		File f = new File("/U/");
-		if (f.exists() && f.isDirectory()) {
-			// /U/ exists, meaning there is a drive plugged in!
-			return true;
-		} else {
+		try {
+			File f = new File("/U/");
+			if (f.exists() && f.isDirectory()) { return true; } // /U/ exists, meaning there is a drive plugged in!
+			else { return false; }
+		}
+		catch (Exception e) {
 			return false;
 		}
+		return true;
+		
 	}
 }
